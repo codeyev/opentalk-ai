@@ -293,9 +293,14 @@ mod tests {
     #[tokio::test]
     async fn a_server_that_is_not_running_is_reported_as_such() {
         // Reserve a port, then close it, so nothing is listening there.
-        let server = MockServer::start(Vec::new()).await;
-        let client = client_for(&server);
-        drop(server);
+        // Dropping a std listener closes it at once on every platform.
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").expect("a free port");
+        let address = listener.local_addr().expect("a local address");
+        drop(listener);
+
+        let endpoint =
+            LocalEndpoint::parse(&format!("http://{address}")).expect("a local endpoint");
+        let client = OllamaClient::new(endpoint);
         assert_eq!(client.status().await, Err(OllamaError::NotRunning));
     }
 
