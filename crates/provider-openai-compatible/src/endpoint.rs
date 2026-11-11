@@ -73,6 +73,11 @@ impl Endpoint {
             self.base.as_str().trim_end_matches('/')
         )
     }
+
+    /// The URL of the speech endpoint under this base.
+    pub(crate) fn speech_url(&self) -> String {
+        format!("{}/audio/speech", self.base.as_str().trim_end_matches('/'))
+    }
 }
 
 #[cfg(test)]

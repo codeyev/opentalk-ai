@@ -22,6 +22,18 @@ export type TranscriptionProviderId = (typeof TRANSCRIPTION_PROVIDERS)[number];
 export const LLM_PROVIDERS = ["openai", "custom", "ollama"] as const;
 export type LlmProviderId = (typeof LLM_PROVIDERS)[number];
 
+/**
+ * What reads text aloud: the voices installed on this computer, ElevenLabs,
+ * or any service with an OpenAI-style speech endpoint.
+ */
+export const SPEECH_PROVIDERS = ["system", "elevenlabs", "compatible"] as const;
+export type SpeechProviderId = (typeof SPEECH_PROVIDERS)[number];
+
+/** An ElevenLabs model that speaks the most languages, Azerbaijani among them. */
+export const DEFAULT_ELEVENLABS_MODEL = "eleven_v3";
+/** An example of a service with an OpenAI-style speech endpoint. */
+export const DEFAULT_SPEECH_BASE_URL = "https://api.openai.com/v1";
+
 export const DEFAULT_OLLAMA_ENDPOINT = "http://localhost:11434";
 /** An example of an OpenAI-compatible service address. */
 export const DEFAULT_CUSTOM_BASE_URL = "https://openrouter.ai/api/v1";
@@ -63,8 +75,22 @@ export interface Settings {
   translationEnabled: boolean;
   /** Whether the conversation is sent to the reply provider. Off by default. */
   repliesEnabled: boolean;
-  /** Whether reply suggestions can be read aloud with the system's voices. Off by default. */
+  /** Whether reply suggestions get a Speak button. Off by default. */
   speechEnabled: boolean;
+  /**
+   * Whether translations of what the other side says are read aloud as
+   * they arrive. Off by default.
+   */
+  speakTranslations: boolean;
+  speechProvider: SpeechProviderId;
+  /** Identifier of the ElevenLabs voice to use, or empty if none was entered. */
+  elevenlabsVoice: string;
+  elevenlabsModel: string;
+  /** Base URL of a service with an OpenAI-style speech endpoint. */
+  speechBaseUrl: string;
+  /** Speech model and voice names on that service, or empty if none were entered. */
+  speechModel: string;
+  speechVoice: string;
   /** Never use a cloud provider. Off by default. */
   localOnly: boolean;
   transcriptionProvider: TranscriptionProviderId;
@@ -98,6 +124,13 @@ export const DEFAULT_SETTINGS: Settings = {
   translationEnabled: false,
   repliesEnabled: false,
   speechEnabled: false,
+  speakTranslations: false,
+  speechProvider: "system",
+  elevenlabsVoice: "",
+  elevenlabsModel: DEFAULT_ELEVENLABS_MODEL,
+  speechBaseUrl: DEFAULT_SPEECH_BASE_URL,
+  speechModel: "",
+  speechVoice: "",
   localOnly: false,
   transcriptionProvider: "openai",
   whisperModel: "",
@@ -168,6 +201,17 @@ export function parseSettings(input: unknown): Settings {
     translationEnabled: input.translationEnabled === true,
     repliesEnabled: input.repliesEnabled === true,
     speechEnabled: input.speechEnabled === true,
+    speakTranslations: input.speakTranslations === true,
+    speechProvider: oneOf(SPEECH_PROVIDERS, input.speechProvider, defaults.speechProvider),
+    elevenlabsVoice: boundedText(input.elevenlabsVoice, MAX_ENDPOINT_LENGTH, ""),
+    elevenlabsModel: boundedText(
+      input.elevenlabsModel,
+      MAX_ENDPOINT_LENGTH,
+      defaults.elevenlabsModel,
+    ),
+    speechBaseUrl: boundedText(input.speechBaseUrl, MAX_ENDPOINT_LENGTH, defaults.speechBaseUrl),
+    speechModel: boundedText(input.speechModel, MAX_ENDPOINT_LENGTH, ""),
+    speechVoice: boundedText(input.speechVoice, MAX_ENDPOINT_LENGTH, ""),
     localOnly: input.localOnly === true,
     transcriptionProvider: oneOf(
       TRANSCRIPTION_PROVIDERS,

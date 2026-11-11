@@ -14,6 +14,8 @@ import { RtlPreviewScreen } from "./screens/RtlPreviewScreen";
 import type { ScreenId } from "./screens/screens";
 import { useSettings } from "./settings/SettingsContext";
 import { SettingsProvider } from "./settings/SettingsProvider";
+import { SpeechProvider } from "./speech/SpeechProvider";
+import { SpokenTranslations } from "./speech/SpokenTranslations";
 
 const SCREEN_COMPONENTS: Record<ScreenId, ComponentType> = {
   live: LiveWorkspace,
@@ -67,7 +69,10 @@ export function App() {
     <SettingsProvider>
       <I18nProvider>
         <CaptureProvider>
-          <AppShell />
+          <SpeechProvider>
+            <SpokenTranslations />
+            <AppShell />
+          </SpeechProvider>
         </CaptureProvider>
       </I18nProvider>
     </SettingsProvider>

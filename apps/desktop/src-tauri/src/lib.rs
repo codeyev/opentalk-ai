@@ -9,6 +9,7 @@ mod capture;
 mod providers;
 mod replies;
 mod secrets;
+mod speech;
 mod transcription;
 mod translation;
 mod whisper;
@@ -67,6 +68,8 @@ pub fn run() {
             whisper::whisper_models,
             whisper::download_whisper_model,
             whisper::cancel_model_download,
+            speech::synthesize_speech,
+            speech::has_api_key,
         ])
         .build(tauri::generate_context!())
         .expect("error while starting the OpenTalk AI application")

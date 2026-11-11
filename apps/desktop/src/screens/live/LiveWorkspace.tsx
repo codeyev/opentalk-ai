@@ -5,14 +5,24 @@ import { captureErrorMessageKey } from "../../capture/captureErrorMessage";
 import { DEMO_CONVERSATION } from "../../demo/demoConversation";
 import { useI18n } from "../../i18n/I18nContext";
 import { languageDisplayName } from "../../lib/language";
+import type { SpeechErrorCode } from "../../providers/providerClient";
 import { useSessionPlan } from "../../providers/useSessionPlan";
 import { AUTO_LANGUAGE } from "../../settings/settings";
 import { useSettings } from "../../settings/SettingsContext";
+import { useSpeechOutput } from "../../speech/SpeechContext";
+import { isCloudSpeech, speechProviderName } from "../../speech/speechProviders";
 import { AudioControls } from "./AudioControls";
 import { CaptureStatus } from "./CaptureStatus";
 import { ConversationPanel } from "./ConversationPanel";
 import { FeatureStatus } from "./FeatureStatus";
 import { ReplySuggestions } from "./ReplySuggestions";
+
+/** The message that says why a translation could not be read aloud. */
+function speechFailureKey(failure: SpeechErrorCode) {
+  return failure === "invalid_settings" || failure === "local_only"
+    ? (`live.speech.reason.${failure}` as const)
+    : (`live.reason.${failure}` as const);
+}
 
 /** Languages of the demo data's replies and their meanings. */
 const DEMO_LANGUAGES = { reply: "en", meaning: "az" };
@@ -28,6 +38,8 @@ export function LiveWorkspace() {
   const capture = useCaptureSession();
   const plan = useSessionPlan();
   const { transcriber, translator, replier, meaningLanguage } = plan;
+  const speech = useSpeechOutput();
+  const speaksTranslations = settings.speakTranslations && speech.voice !== null;
 
   const isCapturing = capture.state === "listening";
   const [wantsDemo, setWantsDemo] = useState(false);
@@ -91,6 +103,11 @@ export function LiveWorkspace() {
               {t("live.transcription.stopped")}
             </p>
           )}
+          {speaksTranslations && speech.failure !== null && (
+            <p role="alert" className="error-text">
+              {t("live.speech.failed", { reason: t(speechFailureKey(speech.failure)) })}
+            </p>
+          )}
           <ConversationPanel conversation={conversation} isDemo={isDemo} />
         </div>
         <ReplySuggestions
@@ -125,6 +142,15 @@ export function LiveWorkspace() {
                 provider: replier.name,
               })}
         </FeatureStatus>
+        {speaksTranslations && (
+          <FeatureStatus isOn={translator !== null}>
+            {translator === null
+              ? t("live.speech.needsTranslation")
+              : t(isCloudSpeech(speech.choice) ? "live.speech.onCloud" : "live.speech.on", {
+                  provider: speechProviderName(speech.choice) ?? t("providers.speech.systemVoices"),
+                })}
+          </FeatureStatus>
+        )}
       </ul>
 
       <AudioControls capture={capture} onStart={start} />

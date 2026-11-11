@@ -1,6 +1,6 @@
 [package]
 name = "opentalk-provider-openai-compatible"
-description = "Translation and reply suggestions through any service that speaks the OpenAI Chat Completions API, such as OpenRouter."
+description = "Translation, reply suggestions and speech output through any service that speaks the OpenAI API, such as OpenRouter."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -12,6 +12,7 @@ workspace = true
 
 [dependencies]
 opentalk-replies = { path = "../replies" }
+opentalk-speech = { path = "../speech" }
 opentalk-translation = { path = "../translation" }
 async-trait = "0.1.92"
 reqwest = { version = "0.13.5", default-features = false, features = ["native-tls"] }

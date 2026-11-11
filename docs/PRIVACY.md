@@ -68,5 +68,7 @@ the app's data folder. Nothing else.
 What can leave the device, and only when the user turned it on: speech
 audio to the chosen transcription provider; transcript text and the
 glossary to the chosen translation provider; the recent conversation and
-business context to the chosen reply provider; and a model download
+business context to the chosen reply provider; each text that is read
+aloud to the chosen speech provider, unless the system's own voices are
+used; and a model download
 request to Hugging Face when the user presses Download.

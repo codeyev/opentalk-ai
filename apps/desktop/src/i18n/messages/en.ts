@@ -222,11 +222,45 @@ export const en = {
   "providers.speech": "Speech",
   "providers.speech.systemVoices": "System voices",
   "providers.speech.description":
-    "Reads a reply suggestion aloud when you press Speak, using the voices installed on this computer. Nothing is sent anywhere, and nothing is ever spoken on its own.",
+    "With system voices, text is spoken by the voices installed on this computer. Nothing is sent anywhere.",
   "providers.speech.voices":
     "Which languages can be spoken depends on the voices installed in your system settings.",
   "providers.speech.enable": "Show a Speak button on reply suggestions",
   "providers.speech.unavailable": "This system does not offer speech output to the app.",
+  "providers.speech.provider": "Voice",
+  "providers.speech.provider.system": "System voices, on this computer",
+  "providers.speech.provider.elevenlabs": "ElevenLabs, a cloud service",
+  "providers.speech.provider.compatible": "A service with an OpenAI-style speech API",
+  "providers.speech.cloudDescription":
+    "Each text that is read aloud is sent over an encrypted connection to {provider}, a cloud service, and turned into speech there. Nothing else is sent.",
+  "providers.speech.localDescription":
+    "Each text that is read aloud is turned into speech by the server at {provider} on this computer. Nothing leaves it.",
+  "providers.speech.model": "Speech model",
+  "providers.speech.elevenlabs.voice": "Voice ID",
+  "providers.speech.elevenlabs.voiceHint": "The ID of a voice in your ElevenLabs voice library.",
+  "providers.speech.elevenlabs.modelHint":
+    "Which languages can be spoken depends on the model. eleven_v3 speaks more than 70, Azerbaijani among them.",
+  "providers.speech.baseUrlHint":
+    "The API base URL, for example https://api.openai.com/v1. It must start with https, unless the service runs on this computer.",
+  "providers.speech.compatible.modelHint":
+    "As the service names it, for example gpt-4o-mini-tts on OpenAI.",
+  "providers.speech.compatible.voice": "Voice",
+  "providers.speech.compatible.voiceHint": "One of the model's voices, for example alloy.",
+  "providers.speech.translations.enable": "Read translations of the other side aloud",
+  "providers.speech.translations.description":
+    "While capture is running, each finished translation of what system audio captures is spoken in your language, a few seconds after it was said. Use headphones, so the microphone does not pick the voice up.",
+  "providers.speech.translations.needsTranslation":
+    "Translation is off, so there is nothing to read aloud. Turn it on above.",
+  "providers.speech.translations.noVoice":
+    "No system voice is installed for {language}. Install one in the system settings, or choose another voice above.",
+  "live.speech.on": "Translations of the other side are read aloud by {provider} on this computer.",
+  "live.speech.onCloud":
+    "Translations of the other side are read aloud: their text is sent to {provider}, a cloud service.",
+  "live.speech.needsTranslation":
+    "Reading translations aloud is on, but translation is off, so nothing is spoken.",
+  "live.speech.failed": "A translation could not be read aloud: {reason}",
+  "live.speech.reason.invalid_settings": "the voice settings are incomplete or not valid.",
+  "live.speech.reason.local_only": "local-only mode is on.",
   "providers.localOnly.title": "Local-only mode",
   "providers.localOnly.toggle": "Never contact a cloud service",
   "providers.localOnly.description":

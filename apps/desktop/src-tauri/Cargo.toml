@@ -21,10 +21,12 @@ tauri-build = { version = "2.7.4", features = [] }
 opentalk-audio-capture = { path = "../../../crates/audio-capture" }
 opentalk-audio-core = { path = "../../../crates/audio-core" }
 opentalk-language = { path = "../../../crates/language" }
+opentalk-provider-elevenlabs = { path = "../../../crates/provider-elevenlabs" }
 opentalk-provider-ollama = { path = "../../../crates/provider-ollama" }
 opentalk-provider-openai-compatible = { path = "../../../crates/provider-openai-compatible" }
 opentalk-provider-openai = { path = "../../../crates/provider-openai" }
 opentalk-provider-whisper = { path = "../../../crates/provider-whisper" }
+opentalk-speech = { path = "../../../crates/speech" }
 opentalk-replies = { path = "../../../crates/replies" }
 opentalk-transcription = { path = "../../../crates/transcription" }
 opentalk-translation = { path = "../../../crates/translation" }

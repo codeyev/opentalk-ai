@@ -18,6 +18,8 @@ const COMMANDS: &[&str] = &[
     "cancel_model_download",
     "save_api_key",
     "delete_api_key",
+    "has_api_key",
+    "synthesize_speech",
 ];
 
 fn main() {

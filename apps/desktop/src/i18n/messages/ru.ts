@@ -220,11 +220,45 @@ export const ru: Messages = {
   "providers.speech": "Озвучивание",
   "providers.speech.systemVoices": "Системные голоса",
   "providers.speech.description":
-    "По нажатию «Озвучить» читает вариант ответа вслух голосами, установленными на этом компьютере. Ничего никуда не отправляется, и ничего не произносится само.",
+    "При выборе системных голосов текст произносят голоса, установленные на этом компьютере. Ничего никуда не отправляется.",
   "providers.speech.voices":
     "Какие языки можно озвучить, зависит от голосов, установленных в настройках системы.",
   "providers.speech.enable": "Показывать кнопку «Озвучить» у вариантов ответа",
   "providers.speech.unavailable": "Эта система не предоставляет приложению вывод речи.",
+  "providers.speech.provider": "Голос",
+  "providers.speech.provider.system": "Системные голоса, на этом компьютере",
+  "providers.speech.provider.elevenlabs": "ElevenLabs, облачный сервис",
+  "providers.speech.provider.compatible": "Сервис с API озвучивания в стиле OpenAI",
+  "providers.speech.cloudDescription":
+    "Каждый озвучиваемый текст отправляется по зашифрованному соединению в облачный сервис {provider} и превращается в речь там. Больше ничего не отправляется.",
+  "providers.speech.localDescription":
+    "Каждый озвучиваемый текст превращает в речь сервер {provider} на этом компьютере. Ничего его не покидает.",
+  "providers.speech.model": "Модель озвучивания",
+  "providers.speech.elevenlabs.voice": "ID голоса",
+  "providers.speech.elevenlabs.voiceHint": "ID голоса из вашей библиотеки голосов ElevenLabs.",
+  "providers.speech.elevenlabs.modelHint":
+    "От модели зависит, на каких языках можно озвучивать. eleven_v3 говорит более чем на 70, включая азербайджанский.",
+  "providers.speech.baseUrlHint":
+    "Базовый адрес API, например https://api.openai.com/v1. Он должен начинаться с https, если сервис работает не на этом компьютере.",
+  "providers.speech.compatible.modelHint":
+    "Как её называет сервис, например gpt-4o-mini-tts у OpenAI.",
+  "providers.speech.compatible.voice": "Голос",
+  "providers.speech.compatible.voiceHint": "Один из голосов модели, например alloy.",
+  "providers.speech.translations.enable": "Озвучивать переводы собеседника",
+  "providers.speech.translations.description":
+    "Пока идёт захват, каждый готовый перевод того, что слышно в системном звуке, произносится на вашем языке через несколько секунд после сказанного. Используйте наушники, чтобы микрофон не улавливал этот голос.",
+  "providers.speech.translations.needsTranslation":
+    "Перевод выключен, поэтому озвучивать нечего. Включите его выше.",
+  "providers.speech.translations.noVoice":
+    "Для языка «{language}» не установлен системный голос. Установите его в настройках системы или выберите другой голос выше.",
+  "live.speech.on": "Переводы собеседника озвучивает {provider} на этом компьютере.",
+  "live.speech.onCloud":
+    "Переводы собеседника озвучиваются: их текст отправляется в облачный сервис {provider}.",
+  "live.speech.needsTranslation":
+    "Озвучивание переводов включено, но перевод выключен, поэтому ничего не произносится.",
+  "live.speech.failed": "Не удалось озвучить перевод: {reason}",
+  "live.speech.reason.invalid_settings": "настройки голоса неполные или неверные.",
+  "live.speech.reason.local_only": "включён режим «только локально».",
   "providers.localOnly.title": "Только локальный режим",
   "providers.localOnly.toggle": "Никогда не обращаться к облачным сервисам",
   "providers.localOnly.description":

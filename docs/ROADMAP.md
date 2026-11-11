@@ -29,6 +29,9 @@ recorded in `docs/KNOWN_LIMITATIONS.md`.
 -   [x] Ollama-compatible reply provider
 -   [x] Local transcription evaluation and adapter
 -   [x] Optional TTS adapter
+-   [x] Spoken translations of the other side, with a choice of voice
+-   [ ] Speaking the user's translated words to the other side (needs a
+    virtual microphone)
 
 ## Release quality
 

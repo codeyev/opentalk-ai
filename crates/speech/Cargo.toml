@@ -1,0 +1,15 @@
+[package]
+name = "opentalk-speech"
+description = "Speech output: the provider-neutral interface for turning text into audio."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+async-trait = "0.1.92"
+thiserror = "2.0"

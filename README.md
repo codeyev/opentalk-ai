@@ -97,8 +97,11 @@ What works today:
 -   Arabic output options: Modern Standard Arabic or a named dialect,
     and tashkeel off, partial, or full. Diacritics in generated text are
     labelled as AI-generated. **Not yet reviewed by a native speaker.**
--   Optional speech output: a Speak button on reply suggestions that
-    uses the voices installed on your computer.
+-   Optional speech output: a Speak button on reply suggestions, and
+    reading the other side's translations aloud as they arrive, so you
+    hear the call in your own language. The voice is your computer's
+    own, ElevenLabs, or any service with an OpenAI-style speech API.
+    **The cloud voices have not been tested against the live services.**
 -   Local AI: translation and reply suggestions can run on a model in
     Ollama on your own computer. **Tested end to end with a real local
     model on macOS** (see `docs/LOCAL_AI.md`).
@@ -165,7 +168,7 @@ apps/desktop/            # Desktop app (pnpm package @opentalk/desktop)
     demo/                # Fixed sample data for demo mode
     capture/             # Typed client for the capture commands, session state
     providers/           # Typed client for the provider and API key commands
-    speech/              # Speech output interface and the system-voice implementation
+    speech/              # Speech output: system voices, provider voices, spoken translations
     i18n/                # Interface text (en, az, ru) and translation helper
     settings/            # Saved user preferences
     components/          # Shared UI components
@@ -180,7 +183,9 @@ crates/
   language/              # Language tag helpers, Arabic style and tashkeel handling
   replies/               # Reply generator trait, conversation context, scheduling
   provider-openai/       # OpenAI adapters: transcription, translation, reply suggestions
-  provider-openai-compatible/  # Any OpenAI-compatible service, such as OpenRouter
+  provider-openai-compatible/  # Any OpenAI-compatible service, such as OpenRouter; also speech
+  speech/                # Speech synthesizer trait and the audio format providers deliver
+  provider-elevenlabs/   # Speech output through ElevenLabs
   provider-ollama/       # Local translation and reply suggestions through Ollama
   provider-whisper/      # Local speech recognition with Whisper, built into the app
   test-support/          # A loopback HTTP server that stands in for providers in tests
@@ -418,15 +423,42 @@ Have a native speaker review anything that matters; a checklist is in
 
 ### Speech output
 
-Off by default. Turning on "Show a Speak button on reply suggestions"
-under Providers adds a button that reads a suggestion aloud.
+Off by default. Under Providers, Speech, there are two switches:
 
--   It uses the voices installed on your computer, through the webview's
-    speech API. No text is sent anywhere.
--   It speaks only when you press Speak. Nothing is spoken on its own.
--   A language can be spoken only if a system voice is installed for it;
-    otherwise the button is disabled. On macOS, voices are added under
-    System Settings, Accessibility, Spoken Content.
+-   **Show a Speak button on reply suggestions** adds a button that
+    reads a suggestion aloud when you press it.
+-   **Read translations of the other side aloud** speaks each finished
+    translation of what system audio captures, in your language, while
+    capture is running. If the other person speaks English and your
+    target language is Azerbaijani, you hear Azerbaijani a few seconds
+    after they spoke. Your own words are never read back. It needs
+    transcription and translation to be on. Use headphones, so the
+    microphone does not pick the voice up.
+
+You choose the voice:
+
+-   **System voices** (the default) are the voices installed on your
+    computer, used through the webview's speech API. No text is sent
+    anywhere. A language can be spoken only if a voice is installed for
+    it; on macOS, voices are added under System Settings, Accessibility,
+    Spoken Content. macOS and Windows may have no voice for some
+    languages, Azerbaijani among them.
+-   **ElevenLabs**, a cloud service. Enter a voice ID from your voice
+    library and save your API key. The default model, `eleven_v3`, is
+    documented as speaking more than 70 languages, including
+    Azerbaijani.
+-   **A service with an OpenAI-style speech API** (`/audio/speech`),
+    such as OpenAI, or a speech server on your own computer. Enter its
+    address, speech model, and voice.
+
+With a cloud voice, each text that is read aloud is sent to that
+service; nothing else is. Local-only mode rules cloud voices out. If
+translations arrive faster than they can be spoken, the oldest waiting
+ones are skipped so that what you hear stays close to the conversation.
+
+Only this direction exists: the other person does not hear a
+translation of you. That needs a virtual microphone and is on the
+roadmap.
 
 ### Pinned versions
 
@@ -476,9 +508,16 @@ do not yet declare support for the newer majors.
     "reply could not be understood".
 -   Arabic output has not been reviewed by a native speaker, and no
     dialect has been tested.
--   Speech output was tested against a fake speech API only; whether
-    the Tauri webview exposes system voices has not been checked on
-    macOS or Windows.
+-   Speech output was tested against a fake speech API and fake
+    providers only. Whether the Tauri webview exposes system voices,
+    and the ElevenLabs and OpenAI-style voices against the live
+    services, have not been checked.
+-   Spoken translations follow the speaker by a few seconds: a sentence
+    must end, be translated, and be turned into speech. The original
+    voice stays audible underneath.
+-   On Windows, system audio capture records everything the computer
+    plays, so a spoken translation may be transcribed again. On macOS
+    the app's own sound is left out of the capture.
 -   Speech detection is a simple loudness-based detector. Quiet speech
     or loud background noise can be missed or cut into odd turns.
 -   The session duration limit of the OpenAI Realtime API is not

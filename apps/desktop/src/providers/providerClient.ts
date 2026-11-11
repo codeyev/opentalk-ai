@@ -172,13 +172,14 @@ export async function getOllamaStatus(endpoint: string): Promise<OllamaStatus> {
 }
 
 /** The services an API key can be saved for. */
-export type KeyOwner = "openai" | "custom";
+export type KeyOwner = "openai" | "custom" | "elevenlabs";
 
 /**
  * Says which service a key belongs to. The user's own service is
  * identified by its address, so each service keeps a key of its own.
  */
-export type KeyTarget = { owner: "openai" } | { owner: "custom"; baseUrl: string };
+export type KeyTarget =
+  { owner: "openai" } | { owner: "elevenlabs" } | { owner: "custom"; baseUrl: string };
 
 function keyArguments(target: KeyTarget) {
   return {
@@ -203,6 +204,55 @@ export async function saveApiKey(target: KeyTarget, apiKey: string): Promise<voi
 
 export async function deleteApiKey(target: KeyTarget): Promise<void> {
   await invoke("delete_api_key", keyArguments(target));
+}
+
+/** Whether a key is saved for a service. The key itself is never returned. */
+export async function hasApiKey(target: KeyTarget): Promise<boolean> {
+  return (await invoke("has_api_key", keyArguments(target))) === true;
+}
+
+/** A speech provider in the core, and the voice it should use. */
+export type SpeechChoice =
+  | { id: "elevenlabs"; voice: string; model: string }
+  | { id: "compatible"; baseUrl: string; model: string; voice: string };
+
+export const SPEECH_ERROR_CODES = [
+  "local_only",
+  "invalid_settings",
+  "missing_api_key",
+  "authentication_failed",
+  "rate_limited",
+  "model_unavailable",
+  "connection_failed",
+  "timeout",
+  "malformed_response",
+  "provider",
+] as const;
+
+export type SpeechErrorCode = (typeof SPEECH_ERROR_CODES)[number] | "unknown";
+
+/** Converts whatever speech synthesis rejected with into a known error code. */
+export function toSpeechErrorCode(value: unknown): SpeechErrorCode {
+  const code = isRecord(value) ? value.code : undefined;
+  return SPEECH_ERROR_CODES.find((known) => known === code) ?? "unknown";
+}
+
+/**
+ * Sends `text` to the chosen speech provider and resolves to the audio:
+ * mono, 16-bit little-endian PCM at 24 kHz. Rejects with the core's error
+ * value; pass it to `toSpeechErrorCode`.
+ */
+export async function synthesizeSpeech(
+  provider: SpeechChoice,
+  text: string,
+  language: string,
+  localOnly: boolean,
+): Promise<ArrayBuffer> {
+  const audio: unknown = await invoke("synthesize_speech", { provider, text, language, localOnly });
+  if (!(audio instanceof ArrayBuffer)) {
+    throw new Error("Unexpected audio from the application core.");
+  }
+  return audio;
 }
 
 /** A Whisper model file in the app's models folder. */

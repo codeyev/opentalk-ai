@@ -20,6 +20,8 @@
     "allow-download-whisper-model",
     "allow-cancel-model-download",
     "allow-save-api-key",
-    "allow-delete-api-key"
+    "allow-delete-api-key",
+    "allow-has-api-key",
+    "allow-synthesize-speech"
   ]
 }

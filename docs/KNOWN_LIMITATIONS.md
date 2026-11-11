@@ -18,7 +18,7 @@ of memory**. Nothing has been run on Windows or on any other Mac.
 | OpenAI transcription, translation, replies | The endpoints reject an invalid key as expected | Any real result: no real key was used |
 | Other AI services | OpenRouter rejects an invalid key as expected | Any real result; Gemini, Claude, DeepSeek, and Groq addresses were never called |
 | Interface | Viewed in a browser in light and dark themes; component tests; the packaged app used by hand for a local session (microphone, Whisper, Ollama translation) | A full pass through every screen; a screen reader |
-| Speech output | Against a fake speech API | Whether the app's web view exposes system voices |
+| Speech output, spoken translations | Against a fake speech API and mock ElevenLabs and OpenAI-style servers | Whether the app's web view exposes system voices; ElevenLabs and OpenAI speech against the live services; how Azerbaijani sounds; playback in the packaged app |
 | Arabic output | Mechanics: diacritic removal, labels, copy order | The Arabic itself; no native-speaker review; no dialect |
 | Installer | Unsigned `.dmg` builds and the app in it starts | Signing, notarization, install on a clean machine, Windows installer |
 

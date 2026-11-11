@@ -220,11 +220,45 @@ export const az: Messages = {
   "providers.speech": "Səsləndirmə",
   "providers.speech.systemVoices": "Sistem səsləri",
   "providers.speech.description":
-    "Səsləndir düyməsini basanda cavab təklifini bu kompüterdə quraşdırılmış səslərlə oxuyur. Heç nə heç yerə göndərilmir və heç nə öz-özünə səsləndirilmir.",
+    "Sistem səsləri seçildikdə mətni bu kompüterdə quraşdırılmış səslər oxuyur. Heç nə heç yerə göndərilmir.",
   "providers.speech.voices":
     "Hansı dillərin səsləndirilə bilməsi sistem ayarlarında quraşdırılmış səslərdən asılıdır.",
   "providers.speech.enable": "Cavab təkliflərində Səsləndir düyməsini göstər",
   "providers.speech.unavailable": "Bu sistem tətbiqə səsləndirmə imkanı vermir.",
+  "providers.speech.provider": "Səs",
+  "providers.speech.provider.system": "Sistem səsləri, bu kompüterdə",
+  "providers.speech.provider.elevenlabs": "ElevenLabs, bulud xidməti",
+  "providers.speech.provider.compatible": "OpenAI tipli səsləndirmə API-si olan xidmət",
+  "providers.speech.cloudDescription":
+    "Səsləndirilən hər mətn şifrələnmiş bağlantı ilə {provider} bulud xidmətinə göndərilir və orada səsə çevrilir. Başqa heç nə göndərilmir.",
+  "providers.speech.localDescription":
+    "Səsləndirilən hər mətni bu kompüterdəki {provider} serveri səsə çevirir. Heç nə kompüterdən çıxmır.",
+  "providers.speech.model": "Səsləndirmə modeli",
+  "providers.speech.elevenlabs.voice": "Səsin ID-si",
+  "providers.speech.elevenlabs.voiceHint": "ElevenLabs səs kitabxananızdakı səsin ID-si.",
+  "providers.speech.elevenlabs.modelHint":
+    "Hansı dillərin səsləndirilə biləcəyi modeldən asılıdır. eleven_v3 70-dən çox dildə, o cümlədən Azərbaycan dilində danışır.",
+  "providers.speech.baseUrlHint":
+    "API-nin əsas ünvanı, məsələn https://api.openai.com/v1. Xidmət bu kompüterdə işləmirsə, https ilə başlamalıdır.",
+  "providers.speech.compatible.modelHint":
+    "Xidmətin onu adlandırdığı kimi, məsələn OpenAI-də gpt-4o-mini-tts.",
+  "providers.speech.compatible.voice": "Səs",
+  "providers.speech.compatible.voiceHint": "Modelin səslərindən biri, məsələn alloy.",
+  "providers.speech.translations.enable": "Qarşı tərəfin tərcümələrini səsləndir",
+  "providers.speech.translations.description":
+    "Səs tutulduğu müddətdə sistem səsindən gələn hər bitmiş tərcümə, deyiləndən bir neçə saniyə sonra, sizin dilinizdə səsləndirilir. Mikrofon bu səsi tutmasın deyə qulaqlıqdan istifadə edin.",
+  "providers.speech.translations.needsTranslation":
+    "Tərcümə söndürülüb, ona görə səsləndiriləcək heç nə yoxdur. Onu yuxarıda yandırın.",
+  "providers.speech.translations.noVoice":
+    "{language} üçün sistem səsi quraşdırılmayıb. Sistem ayarlarında quraşdırın və ya yuxarıda başqa səs seçin.",
+  "live.speech.on": "Qarşı tərəfin tərcümələrini bu kompüterdə {provider} səsləndirir.",
+  "live.speech.onCloud":
+    "Qarşı tərəfin tərcümələri səsləndirilir: mətnləri {provider} bulud xidmətinə göndərilir.",
+  "live.speech.needsTranslation":
+    "Tərcümələrin səsləndirilməsi yandırılıb, amma tərcümə söndürülüb, ona görə heç nə səslənmir.",
+  "live.speech.failed": "Tərcüməni səsləndirmək alınmadı: {reason}",
+  "live.speech.reason.invalid_settings": "səs ayarları natamamdır və ya düzgün deyil.",
+  "live.speech.reason.local_only": "yalnız lokal rejim yandırılıb.",
   "providers.localOnly.title": "Yalnız lokal rejim",
   "providers.localOnly.toggle": "Heç vaxt bulud xidməti ilə əlaqə saxlama",
   "providers.localOnly.description":

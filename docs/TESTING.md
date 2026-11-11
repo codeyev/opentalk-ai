@@ -212,6 +212,28 @@ server. The cases below need a real account with a third-party service.
 | 7 | Remove the service's key | Its features stop; the OpenAI key is untouched | Not run |
 | 8 | Local-only mode with a remote service chosen | The remote service cannot be used | Not run |
 
+## Spoken translation test matrix
+
+Speech providers are tested against the loopback mock server, and the
+UI against fake voices. The cases below need the packaged app, a call
+or a video playing, and for the cloud voices a real account.
+
+| # | Case | Expected | Result |
+| - | ---- | -------- | ------ |
+| 1 | System voices, English audio, target language with an installed voice | Each translation is spoken once, in order, a few seconds after it was said | Not run |
+| 2 | System voices, target language with no installed voice | A warning under Providers; nothing is spoken | Not run |
+| 3 | ElevenLabs with a real key, `eleven_v3`, target Azerbaijani | Clear Azerbaijani speech | Not run |
+| 4 | ElevenLabs with a wrong key | "could not be read aloud: the provider rejected the API key" | Not run |
+| 5 | ElevenLabs with an unknown voice ID | "the selected model is not available" | Not run |
+| 6 | OpenAI speech (`https://api.openai.com/v1`, a speech model and voice) | Speech is played | Not run |
+| 7 | A local OpenAI-style speech server with no key | Works, and is labelled "on this computer" | Not run |
+| 8 | The user speaks into the microphone | Their own translation is not read aloud | Not run |
+| 9 | Fast speech from the other side | Older waiting translations are skipped; speech stays current | Not run |
+| 10 | Press Stop while a translation is being spoken | Speech ends at once | Not run |
+| 11 | macOS: spoken translation with system audio captured | The spoken voice does not appear in the transcript | Not run |
+| 12 | Windows: the same | Known limitation: the voice may be transcribed again | Not run |
+| 13 | Local-only mode with a cloud voice chosen | The switch is disabled; nothing is sent | Not run |
+
 ## Local transcription test matrix
 
 The model catalogue, file-name checks, and verified download are unit

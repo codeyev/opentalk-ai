@@ -366,3 +366,35 @@ Consequences: Building the app now needs CMake and a C++ toolchain on
 every platform, and the Windows build of the engine is untested. The
 binary is larger. Model names for third-party services are the user's
 responsibility; the presets show an example only.
+
+## ADR-017: Spoken translations and speech providers
+
+Context: Users want to hear the other side of a call in their own
+language. The system voices used so far cover few languages; neither
+macOS nor Windows is known to ship an Azerbaijani voice.
+
+Decision:
+
+-   Reading translations aloud is a separate, off-by-default switch.
+    Only translations of system audio are spoken, each once, in order.
+-   Speech providers sit behind a `SpeechSynthesizer` trait in
+    `crates/speech`. Every provider returns the same audio (mono 16-bit
+    PCM at 24 kHz), so the UI has one player and no decoder.
+-   Two providers are added: ElevenLabs, and any service with an
+    OpenAI-style `/audio/speech` endpoint. The second also covers
+    speech servers on the user's own computer, which keeps a fully
+    local path possible beyond the system voices.
+-   Requests go through the core, which holds the keys, applies
+    local-only mode, and bounds the text length. The UI receives audio
+    only.
+-   The app plays through the webview. On macOS the app's own sound is
+    already excluded from system audio capture, so a spoken translation
+    is not transcribed again.
+-   At most three texts wait to be spoken; older ones are skipped. Being
+    current matters more than being complete, and the full text stays
+    on screen.
+
+Consequences: Spoken translations lag by a few seconds and overlap the
+original voice. On Windows the loopback capture may hear the spoken
+translation. Speaking the user's own words to the other side is not
+part of this; it needs a virtual audio device.

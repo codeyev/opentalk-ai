@@ -3008,11 +3008,13 @@ dependencies = [
  "opentalk-audio-capture",
  "opentalk-audio-core",
  "opentalk-language",
+ "opentalk-provider-elevenlabs",
  "opentalk-provider-ollama",
  "opentalk-provider-openai",
  "opentalk-provider-openai-compatible",
  "opentalk-provider-whisper",
  "opentalk-replies",
+ "opentalk-speech",
  "opentalk-transcription",
  "opentalk-translation",
  "serde",
@@ -3029,6 +3031,18 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "opentalk-provider-elevenlabs"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "opentalk-speech",
+ "opentalk-test-support",
+ "reqwest",
+ "serde_json",
+ "tokio",
 ]
 
 [[package]]
@@ -3072,6 +3086,7 @@ dependencies = [
  "async-trait",
  "opentalk-language",
  "opentalk-replies",
+ "opentalk-speech",
  "opentalk-test-support",
  "opentalk-translation",
  "reqwest",
@@ -3105,6 +3120,14 @@ dependencies = [
  "serde_json",
  "thiserror 2.0.21",
  "tokio",
+]
+
+[[package]]
+name = "opentalk-speech"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "thiserror 2.0.21",
 ]
 
 [[package]]

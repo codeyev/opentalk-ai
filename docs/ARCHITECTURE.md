@@ -43,6 +43,8 @@ crates/
   language/                    # Language tags and Arabic output style
   provider-openai/             # OpenAI: streaming transcription, translation, replies
   provider-openai-compatible/  # Any OpenAI-compatible service (OpenRouter, Gemini, ...)
+  speech/                      # Speech synthesizer trait, audio format
+  provider-elevenlabs/         # Speech output through ElevenLabs
   provider-ollama/             # Local translation and replies through Ollama
   provider-whisper/            # Local speech recognition, built in
   test-support/                # Loopback mock server for provider tests

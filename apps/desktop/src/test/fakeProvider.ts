@@ -1,6 +1,7 @@
 import { vi } from "vitest";
 import type {
   KeyTarget,
+  SpeechChoice,
   OllamaStatus,
   ProviderStatus,
   TranslationProviderStatus,
@@ -46,21 +47,36 @@ export const fakeProvider = {
   ollama: null as OllamaStatus | null,
   /** Addresses of the user's own services that have a saved key. Each has its own. */
   customKeys: new Set<string>(),
+  hasElevenLabsKey: false,
   /** The Whisper models folder as the core reports it. */
   whisper: EMPTY_WHISPER,
   saveApiKey: vi.fn<(target: KeyTarget, apiKey: string) => Promise<void>>(),
   deleteApiKey: vi.fn<(target: KeyTarget) => Promise<void>>(),
   downloadWhisperModel: vi.fn<(id: string, localOnly: boolean) => Promise<void>>(),
+  /** Resolves to four silent bytes unless a test says otherwise. */
+  synthesizeSpeech:
+    vi.fn<
+      (
+        provider: SpeechChoice,
+        text: string,
+        language: string,
+        localOnly: boolean,
+      ) => Promise<ArrayBuffer>
+    >(),
 
   reset({ hasApiKey = false } = {}) {
     this.status = { ...OPENAI, hasApiKey };
     this.ollama = null;
     this.customKeys = new Set();
+    this.hasElevenLabsKey = false;
+    this.synthesizeSpeech.mockReset().mockImplementation(() => Promise.resolve(new ArrayBuffer(4)));
     this.whisper = EMPTY_WHISPER;
     // Each service has its own key, as in the real credential store.
     const setKey = (target: KeyTarget, isSaved: boolean) => {
       if (target.owner === "openai") {
         this.status = { ...OPENAI, hasApiKey: isSaved };
+      } else if (target.owner === "elevenlabs") {
+        this.hasElevenLabsKey = isSaved;
       } else if (isSaved) {
         this.customKeys.add(target.baseUrl);
       } else {
@@ -115,6 +131,15 @@ export async function fakeProviderClientModule() {
           }),
     getCustomProvider: (baseUrl: string) =>
       Promise.resolve({ hasApiKey: fakeProvider.customKeys.has(baseUrl) }),
+    hasApiKey: (target: KeyTarget) =>
+      Promise.resolve(
+        target.owner === "openai"
+          ? fakeProvider.status?.hasApiKey === true
+          : target.owner === "elevenlabs"
+            ? fakeProvider.hasElevenLabsKey
+            : fakeProvider.customKeys.has(target.baseUrl),
+      ),
+    synthesizeSpeech: fakeProvider.synthesizeSpeech,
     getWhisperModels: () => Promise.resolve(fakeProvider.whisper),
     downloadWhisperModel: fakeProvider.downloadWhisperModel,
     cancelModelDownload: () => Promise.resolve(),

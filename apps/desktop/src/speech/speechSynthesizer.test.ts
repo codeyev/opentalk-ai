@@ -50,4 +50,19 @@ describe("createSystemSpeechSynthesizer", () => {
     unsubscribe?.();
     expect(speech.listenerCount()).toBe(0);
   });
+
+  it("queues a text behind what is being spoken when asked to speak it next", () => {
+    const speech = installFakeSpeech(["en-US"]);
+    const synthesizer = createSystemSpeechSynthesizer();
+    synthesizer?.speakNext("First.", "en");
+    synthesizer?.speakNext("Second.", "en");
+    // No voice for this language, so nothing is queued.
+    synthesizer?.speakNext("Salam.", "az");
+
+    expect(speech.cancel).not.toHaveBeenCalled();
+    expect(speech.speak.mock.calls.map(([utterance]) => utterance.text)).toEqual([
+      "First.",
+      "Second.",
+    ]);
+  });
 });

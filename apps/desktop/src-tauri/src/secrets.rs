@@ -23,6 +23,8 @@ pub enum KeyOwner {
     Openai,
     /// The user's own OpenAI-compatible service, such as OpenRouter.
     Custom,
+    /// ElevenLabs, for speech output.
+    Elevenlabs,
 }
 
 /// The name a service's key is stored under in the credential store.
@@ -33,6 +35,7 @@ pub enum KeyOwner {
 pub fn key_id(owner: KeyOwner, base_url: Option<&str>) -> Option<String> {
     match owner {
         KeyOwner::Openai => Some(opentalk_provider_openai::PROVIDER_ID.to_owned()),
+        KeyOwner::Elevenlabs => Some(opentalk_provider_elevenlabs::PROVIDER_ID.to_owned()),
         KeyOwner::Custom => {
             let endpoint = opentalk_provider_openai_compatible::Endpoint::parse(base_url?).ok()?;
             Some(format!("service:{}", endpoint.host()))
@@ -94,6 +97,10 @@ mod tests {
     #[test]
     fn each_service_keeps_its_own_key() {
         assert_eq!(key_id(KeyOwner::Openai, None).as_deref(), Some("openai"));
+        assert_eq!(
+            key_id(KeyOwner::Elevenlabs, None).as_deref(),
+            Some("elevenlabs")
+        );
         assert_eq!(
             key_id(KeyOwner::Custom, Some("https://openrouter.ai/api/v1")).as_deref(),
             Some("service:openrouter.ai")

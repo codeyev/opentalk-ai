@@ -33,7 +33,10 @@ not been verified.
   service.
 - Arabic output options: Modern Standard Arabic or a named dialect, and
   tashkeel off, partial, or full, with generated diacritics labelled.
-- Optional speech output using the system's installed voices.
+- Optional speech output: a Speak button on reply suggestions, and
+  reading the other side's translations aloud as they arrive. The voice
+  is the system's own, ElevenLabs, or any service with an OpenAI-style
+  speech API.
 - API keys stored in the operating system's credential store, one per
   service.
 - Interface in English, Azerbaijani, and Russian; light and dark themes;
