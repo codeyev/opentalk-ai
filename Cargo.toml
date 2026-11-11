@@ -1,0 +1,28 @@
+[workspace]
+resolver = "2"
+members = ["apps/desktop/src-tauri", "crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.90"
+license = "MIT"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+# Panics unwind rather than abort, so a failure while processing audio can be
+# caught and reported, and capture devices are released in an orderly way.
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+# Stripping is switched off. Cargo otherwise strips debug information from
+# release builds, and on macOS 27 that step corrupts the macro libraries used
+# during the build whenever a minimum macOS version is set, as Tauri does
+# ("mis-aligned LINKEDIT string pool"). The binary carries symbol names as a
+# result, but no debug information.
+strip = "none"

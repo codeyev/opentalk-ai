@@ -1,0 +1,15 @@
+[package]
+name = "opentalk-audio-core"
+description = "Platform-neutral audio types, frame normalization and the bounded frame queue."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0"

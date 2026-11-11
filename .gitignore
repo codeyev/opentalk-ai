@@ -1,0 +1,40 @@
+node_modules/
+dist/
+target/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.wav
+*.mp3
+*.m4a
+recordings/
+captures/
+
+# Build output and caches
+*.tsbuildinfo
+coverage/
+.eslintcache
+apps/desktop/src-tauri/gen/schemas/
+
+# Local secrets and signing material
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+
+# Generated or captured audio
+*.flac
+*.ogg
+*.opus
+*.aac
+*.pcm
+*.raw

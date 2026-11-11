@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- OpenTalk AI app icon: two sides of a conversation as lines of text. -->
+  <rect x="100" y="100" width="824" height="824" rx="184" fill="#2459d6"/>
+  <g fill="#ffffff">
+    <rect x="232" y="300" width="400" height="64" rx="32"/>
+    <rect x="232" y="408" width="270" height="64" rx="32"/>
+  </g>
+  <g fill="#ffffff" fill-opacity="0.62">
+    <rect x="392" y="552" width="400" height="64" rx="32"/>
+    <rect x="522" y="660" width="270" height="64" rx="32"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+[package]
+name = "opentalk-replies"
+description = "Provider-neutral reply suggestions: the generator trait, conversation context, validation and scheduling."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+opentalk-language = { path = "../language" }
+async-trait = "0.1.92"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+tokio = { version = "1.54", features = ["rt", "time"] }
+
+[dev-dependencies]
+tokio = { version = "1.54", features = ["macros", "rt", "time", "test-util"] }

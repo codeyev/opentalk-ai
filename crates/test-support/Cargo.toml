@@ -1,0 +1,15 @@
+[package]
+name = "opentalk-test-support"
+description = "Helpers for tests: a small HTTP server on a loopback port that stands in for a provider."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+serde_json = "1.0"
+tokio = { version = "1.54", features = ["rt", "net", "io-util"] }

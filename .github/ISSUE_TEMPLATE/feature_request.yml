@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest an improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Privacy impact
+      description: Would this send, store, or expose audio, transcripts, or keys? If so, how should the user stay in control?

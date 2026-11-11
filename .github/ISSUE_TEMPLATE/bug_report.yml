@@ -1,0 +1,55 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a problem. **Do not include API keys,
+        recordings, transcripts, or other people's conversations.**
+        Describe what was said in general terms instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: OpenTalk AI version
+      description: Shown on the About screen.
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system and version
+      placeholder: macOS 15.1 (Apple silicon), Windows 11 23H2
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Audio capture
+        - Transcription
+        - Translation
+        - Reply suggestions
+        - Settings and providers
+        - Installation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: providers
+    attributes:
+      label: Providers in use
+      description: For example "Whisper base for transcription, Ollama qwen3.5:9b for replies". No keys.
+  - type: textarea
+    id: message
+    attributes:
+      label: Error message
+      description: The exact message the app showed, if any.

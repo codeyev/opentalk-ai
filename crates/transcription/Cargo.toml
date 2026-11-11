@@ -1,0 +1,21 @@
+[package]
+name = "opentalk-transcription"
+description = "Provider-neutral streaming transcription: the provider trait, transcript events and the audio-to-text pipeline."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+opentalk-audio-core = { path = "../audio-core" }
+async-trait = "0.1.92"
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0"
+tokio = { version = "1.54", features = ["macros", "rt", "sync", "time"] }
+
+[dev-dependencies]
+tokio = { version = "1.54", features = ["macros", "rt", "sync", "time", "test-util"] }

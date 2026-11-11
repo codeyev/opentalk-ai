@@ -1,0 +1,29 @@
+{
+  "name": "opentalk-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source desktop assistant for real-time multilingual conversations.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22.22.2"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @opentalk/desktop tauri dev",
+    "build": "pnpm --filter @opentalk/desktop tauri build",
+    "typecheck": "pnpm --filter @opentalk/desktop typecheck",
+    "lint": "pnpm --filter @opentalk/desktop lint",
+    "test": "pnpm --filter @opentalk/desktop test",
+    "build:web": "pnpm --filter @opentalk/desktop build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "rust:fmt": "cargo fmt --all",
+    "rust:fmt:check": "cargo fmt --all -- --check",
+    "rust:lint": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "rust:test": "cargo test --workspace --locked",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build:web && pnpm rust:fmt:check && pnpm rust:lint && pnpm rust:test"
+  },
+  "devDependencies": {
+    "prettier": "3.9.10"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Least-privilege capability for the main window: core defaults plus the app's own commands.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "allow-app-info",
+    "allow-list-microphones",
+    "allow-start-capture",
+    "allow-stop-capture",
+    "allow-is-capturing",
+    "allow-transcription-provider",
+    "allow-translation-provider",
+    "allow-reply-provider",
+    "allow-refresh-replies",
+    "allow-ollama-status",
+    "allow-custom-provider",
+    "allow-whisper-models",
+    "allow-download-whisper-model",
+    "allow-cancel-model-download",
+    "allow-save-api-key",
+    "allow-delete-api-key"
+  ]
+}
