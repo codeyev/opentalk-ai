@@ -201,7 +201,7 @@ that first needs them; see `docs/ARCHITECTURE.md`.
 -   pnpm 10 (pinned to 10.33.2 through the `packageManager` field;
     `corepack enable` selects it automatically)
 -   Rust stable 1.90 or newer with `rustfmt` and `clippy` (developed
-    with 1.95.0; `rust-toolchain.toml` selects stable)
+    with 1.99.1; `rust-toolchain.toml` selects stable)
 -   macOS: Xcode or the Xcode command line tools
     (`xcode-select --install`)
 -   Windows: Microsoft C++ Build Tools ("Desktop development with C++")

@@ -176,6 +176,22 @@ mod tests {
         assert!(result.is_err());
     }
 
+    /// The samples of the 16 kHz mono 16-bit WAV file named by `WHISPER_WAV`.
+    fn recorded_samples() -> Vec<i16> {
+        let path = std::env::var("WHISPER_WAV").expect("set WHISPER_WAV to a WAV file");
+        let wav = std::fs::read(path).expect("the WAV file should be readable");
+        // Skip the header; what follows the "data" marker is little-endian samples.
+        let marker = wav
+            .windows(4)
+            .position(|window| window == b"data")
+            .expect("a data chunk");
+        let (samples, _incomplete) = wav[marker + 8..].as_chunks::<2>();
+        samples
+            .iter()
+            .map(|&sample| i16::from_le_bytes(sample))
+            .collect()
+    }
+
     /// Transcribes real speech with a real model on this computer:
     ///
     /// ```text
@@ -186,19 +202,7 @@ mod tests {
     #[ignore = "needs a Whisper model file and a 16 kHz mono 16-bit WAV file"]
     async fn live_model_transcribes_a_recording() {
         let model = std::env::var("WHISPER_MODEL").expect("set WHISPER_MODEL to a model file");
-        let wav =
-            std::fs::read(std::env::var("WHISPER_WAV").expect("set WHISPER_WAV to a WAV file"))
-                .unwrap();
-        // Skip the WAV header; the rest is 16-bit little-endian samples.
-        let data_start = wav
-            .windows(4)
-            .position(|window| window == b"data")
-            .expect("a data chunk")
-            + 8;
-        let samples: Vec<i16> = wav[data_start..]
-            .chunks_exact(2)
-            .map(|pair| i16::from_le_bytes([pair[0], pair[1]]))
-            .collect();
+        let samples = recorded_samples();
 
         let started = std::time::Instant::now();
         let transcriber =
@@ -238,17 +242,9 @@ mod tests {
         const FRAME_SAMPLES: usize = 320; // 20 ms at 16 kHz
 
         let model = std::env::var("WHISPER_MODEL").expect("set WHISPER_MODEL to a model file");
-        let wav =
-            std::fs::read(std::env::var("WHISPER_WAV").expect("set WHISPER_WAV to a WAV file"))
-                .unwrap();
-        let data_start = wav
-            .windows(4)
-            .position(|window| window == b"data")
-            .expect("a data chunk")
-            + 8;
-        let mut samples: Vec<f32> = wav[data_start..]
-            .chunks_exact(2)
-            .map(|pair| f32::from(i16::from_le_bytes([pair[0], pair[1]])) / 32_768.0)
+        let mut samples: Vec<f32> = recorded_samples()
+            .into_iter()
+            .map(|sample| f32::from(sample) / 32_768.0)
             .collect();
         // A second of silence, so the speech detector sees the turn end.
         samples.extend(std::iter::repeat_n(0.0, SAMPLE_RATE as usize));

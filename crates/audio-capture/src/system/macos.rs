@@ -141,9 +141,10 @@ fn mono_samples(sample: &CMSampleBuffer) -> Option<(u32, Vec<f32>)> {
 }
 
 fn f32_samples(bytes: &[u8]) -> Vec<f32> {
-    bytes
-        .chunks_exact(BYTES_PER_SAMPLE)
-        .map(|chunk| f32::from_ne_bytes([chunk[0], chunk[1], chunk[2], chunk[3]]))
+    let (samples, _incomplete) = bytes.as_chunks::<BYTES_PER_SAMPLE>();
+    samples
+        .iter()
+        .map(|&sample| f32::from_ne_bytes(sample))
         .collect()
 }
 
