@@ -542,6 +542,11 @@ Never commit API keys, credentials, captured audio, transcripts, or
 customer data. Use OS-protected secret storage where available. See
 `docs/SECURITY.md` and `docs/PRIVACY.md`.
 
+## Author
+
+Built by Ibrahim Aliyev ([codeyev](https://codeyev.com)), a full-stack developer.
+Project page with screenshots and details: [OpenTalk AI on codeyev.com](https://codeyev.com/portfolio/opentalk-ai).
+
 ## License
 
 MIT. See `LICENSE`.
